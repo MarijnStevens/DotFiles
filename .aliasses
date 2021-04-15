@@ -1,0 +1,13 @@
+# Git 
+
+alias q='git status'
+alias c='git commit' 
+alias gitll="git log --pretty=format:'%C(yellow)%h %Cred%ad  %Creset%s' --date=local"
+alias gitpa="git log --pretty=format:'%C(yellow)%h %<(24)%C(red)%ad %<(18)%C(green)%an %C(reset)%s' --date=local --max-count=10"
+alias gitbr='git log --oneline --decorate --graph --all'
+
+# Replace applications 
+
+alias code='vscodium'
+
+
