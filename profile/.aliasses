@@ -6,5 +6,5 @@ alias a='git add . && git status'
 # Replace applications 
 
 alias code='vscodium'
-
+alias vi='vim'
 

@@ -1,0 +1,102 @@
+#!/bin/bash
+
+#/////////////////////////////////////////////////////////////////////////////////////
+# Global
+#/////////////////////////////////////////////////////////////////////////////////////
+
+# * Calculate last login
+
+# * Calculate current system uptime
+
+# * Calculate usage of home directory
+
+# * Calculate SSH logins:
+
+# * Calculate processes
+
+# * Calculate current system load
+
+# * Calculate Memory
+
+# * Calculate disk temperature from hddtemp
+
+# * Calculate temperature from lm-sensors
+
+
+VERSION="1"
+HW_MODEL_DESCRIPTION="Raspberry Pi 0 (512GB)"
+HOSTNAME=$(cat /etc/hostname)
+UPTIME=$(uptime -p)
+
+# Color palette: 
+# $: for COLOR in {1..255}; do echo -en "\e[38;5;${COLOR}m${COLOR} "; done; echo;
+
+BORDER_COLOR="\e[38;5;27m"
+
+#/////////////////////////////////////////////////////////////////////////////////////
+#Top section additional Text. Update available / MOTD etc
+#/////////////////////////////////////////////////////////////////////////////////////
+TEXT_TOP=""
+UPDATE_AVAILABLE=-1
+
+PrintHardwareModel(){
+	echo -e " V$VERSION \e[90m| $HW_MODEL_DESCRIPTION\e[0m\n $BORDER_COLOR───────────────────────────────────────\e[0m"
+}
+
+PrintInfo () 
+{
+	info=$1
+	result=$2
+	
+	echo -e " $info: \e[90m $result"
+}
+
+
+#/////////////////////////////////////////////////////////////////////////////////////
+# Banner Print
+#/////////////////////////////////////////////////////////////////////////////////////
+BannerExtras(){
+
+	#Update Available
+	if (( $UPDATE_AVAILABLE > 0 )); then
+		TEXT_TOP="\e[90m|\e[0m \e[91mUpdate available\e[0m \e[90m| $(date +"%R | %a %x")\e[0m"
+	else
+		#Helpful mode
+		TEXT_TOP="\e[90m| $(date +"%R | %a %x")\e[0m"
+	fi
+}
+
+Banner(){
+	echo -e " $BORDER_COLOR───────────────────────────────────────\e[0m\n \e[1m$HOSTNAME\e[0m $TEXT_TOP \n $BORDER_COLOR───────────────────────────────────────\e[0m"
+	PrintHardwareModel
+
+	PrintInfo "Uptime" "$UPTIME"
+	
+}
+
+Description(){
+		
+	echo -e ""
+	echo -e "\e[1m pacman -S\e[0m	=\e[90m Install new packages.\e[0m"
+	echo -e "\e[1m pacman -R\e[0m	=\e[90m Remove new packages.\e[0m"			
+
+	#Update available
+	if (( $UPDATE_AVAILABLE > 0 )); then
+		echo -e "\e[1m pacman -Syu\e[0m	= \e[91mRun this to update and upgrade your system.\e[0m"
+	else 
+		echo -e "\e[1m pacman -Syu\e[0m	= \e[90mRun this to update and upgrade your system.\e[0m"	
+	fi
+	
+	echo -e ""
+}
+
+#/////////////////////////////////////////////////////////////////////////////////////
+# Main Loop
+#/////////////////////////////////////////////////////////////////////////////////////
+
+BannerExtras
+Banner
+
+Description	
+
+#-------------------------------------------------------------------------------------
