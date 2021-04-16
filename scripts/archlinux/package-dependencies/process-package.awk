@@ -8,11 +8,11 @@ BEGIN {
     package=$0;
     print "Software: ", $package;
     
-#    printf "Depedencies: \n"
-#    system("pactree $0")
+    printf "Depedencies: \n"
+    system("pactree $0")
     
-    cmd=sprintf("pactree --graph %s | dot -Tpng > packages/%s.png", $package, $package);
-    system(cmd);
+#    cmd=sprintf("pactree --graph %s | dot -Tpng > packages/%s.png", $package, $package);
+#    system(cmd);
 
     printf "======================================\n\n";
 }

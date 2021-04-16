@@ -1,0 +1,1 @@
+scp ./dietpi-banner.sh orion:/DietPi/dietpi/dietpi-banner

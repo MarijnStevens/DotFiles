@@ -39,18 +39,9 @@ BORDER_COLOR="\e[38;5;27m"
 TEXT_TOP=""
 UPDATE_AVAILABLE=-1
 
-PrintHardwareModel(){
-	echo -e " V$VERSION \e[90m| $HW_MODEL_DESCRIPTION\e[0m\n $BORDER_COLOR───────────────────────────────────────\e[0m"
+PrintInfo () {	
+	echo -e " $1: \e[90m $2 \e[0m" 
 }
-
-PrintInfo () 
-{
-	info=$1
-	result=$2
-	
-	echo -e " $info: \e[90m $result"
-}
-
 
 #/////////////////////////////////////////////////////////////////////////////////////
 # Banner Print
@@ -67,11 +58,14 @@ BannerExtras(){
 }
 
 Banner(){
-	echo -e " $BORDER_COLOR───────────────────────────────────────\e[0m\n \e[1m$HOSTNAME\e[0m $TEXT_TOP \n $BORDER_COLOR───────────────────────────────────────\e[0m"
-	PrintHardwareModel
-
-	PrintInfo "Uptime" "$UPTIME"
+	echo -e " $BORDER_COLOR───────────────────────────────────────\e[0m"
+	echo -e " \e[1m$HOSTNAME\e[0m $TEXT_TOP"	
+	echo -e " $BORDER_COLOR───────────────────────────────────────\e[0m"
 	
+	PrintInfo "Version" "V$VERSION \e[90m($HW_MODEL_DESCRIPTION)\e[0m"
+	PrintInfo "Uptime" "$UPTIME"	
+	
+	echo -e "  $BORDER_COLOR───────────────────────────────────────\e[0m"        
 }
 
 Description(){
@@ -93,10 +87,13 @@ Description(){
 #/////////////////////////////////////////////////////////////////////////////////////
 # Main Loop
 #/////////////////////////////////////////////////////////////////////////////////////
+clear
 
 BannerExtras
 Banner
 
-Description	
+echo -e ""
+
+#Description	
 
 #-------------------------------------------------------------------------------------
