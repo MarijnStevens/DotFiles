@@ -53,7 +53,7 @@ char* diskStat(){
   char data[4096];
 
   /* Open the command for reading. */
-  fp = popen("df -P", "r");
+  fp = popen("\"df\" -P", "r");
   if (fp == NULL) {
     printf("Failed to run command\n" );
     exit(1);
@@ -66,29 +66,35 @@ char* diskStat(){
   // Prepare formating
   char *target = data;
 
-  target += sprintf(target, "%s", "[");
+  target += sprintf(target, "%s", "[\n");
 
   /* Read the output a line at a time - output it. */
   while (fgets(path, sizeof(path), fp) != NULL) {
 
+    memset(&diskName[0], 0, sizeof(diskName));
+    memset(&use[0], 0, sizeof(use));
+    memset(&diskPath[0], 0, sizeof(diskPath));
+
     fscanf(fp, "%s %lu %lu %lu %s %s", diskName, &total, &used, &avaible, use, diskPath);
 
-    bool allowDisk = strcmp(diskName,"tmpfs") != 0 && strcmp(diskName,"devtmpfs") != 0;
+    bool allowDisk = strcmp(diskName,"tmpfs") != 0
+    && strcmp(diskName,"devtmpfs") != 0
+    && strcmp(diskName, "") != 0;
 
     if(allowDisk) {
       if(index > 0){
-        target += sprintf(target, "%s", ", ");
+        target += sprintf(target, "%s", ", \n");
       }
 
       target += sprintf(target,
-        "{ \"name\": \"%s\", \"total\": %lu, \"used\": %lu, \"avaible\": %lu, \"use\": \"%s\", \"mount\": \"%s\" }",
+        "    { \"name\": \"%s\", \"total\": %lu, \"used\": %lu, \"avaible\": %lu, \"use\": \"%s\", \"mount\": \"%s\" }",
          diskName, total, used, avaible, use, diskPath);
 
       index++;
     }
   }
 
-  target += sprintf(target, "%s", "]");
+  target += sprintf(target, "%s", "\n  ]");
 
   /* close */
   pclose(fp);
@@ -147,9 +153,9 @@ int main(void)
     target += sprintf(target, " \"sharedram\": %lu, \n", info.sharedram);
     target += sprintf(target, " \"bufferram\": %lu, \n", info.bufferram);
     target += sprintf(target, " \"totalswap\": %lu, \n", info.totalswap);
-    target += sprintf(target, " \"freeswap\": %lu \n", info.freeswap);
+    target += sprintf(target, " \"freeswap\": %lu, \n", info.freeswap);
 
-    target += sprintf(target, "%s", "},\n");
+    //target += sprintf(target, "%s", "},\n");
 
     target += sprintf(target, " \"disks\": %s, \n", disks);
     target += sprintf(target, " \"measurement\": %f, \n", (endTime-startTime));

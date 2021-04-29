@@ -4,31 +4,12 @@
 # Global
 #/////////////////////////////////////////////////////////////////////////////////////
 
-# * Calculate last login
-
-# * Calculate current system uptime
-
-# * Calculate usage of home directory
-
-# * Calculate SSH logins:
-
-# * Calculate processes
-
-# * Calculate current system load
-
-# * Calculate Memory
-
-# * Calculate disk temperature from hddtemp
-
-# * Calculate temperature from lm-sensors
-
-
 VERSION="1"
-HW_MODEL_DESCRIPTION="Raspberry Pi 0 (512GB)"
+HW_MODEL_DESCRIPTION=$(cat /proc/device-tree/model)
 HOSTNAME=$(cat /etc/hostname)
 UPTIME=$(uptime -p)
 
-# Color palette: 
+# Color palette:
 # $: for COLOR in {1..255}; do echo -en "\e[38;5;${COLOR}m${COLOR} "; done; echo;
 
 BORDER_COLOR="\e[38;5;27m"
@@ -39,8 +20,8 @@ BORDER_COLOR="\e[38;5;27m"
 TEXT_TOP=""
 UPDATE_AVAILABLE=-1
 
-PrintInfo () {	
-	echo -e " $1: \e[90m $2 \e[0m" 
+PrintInfo () {
+	echo -e " $1: \e[90m $2 \e[0m"
 }
 
 #/////////////////////////////////////////////////////////////////////////////////////
@@ -59,28 +40,28 @@ BannerExtras(){
 
 Banner(){
 	echo -e " $BORDER_COLOR───────────────────────────────────────\e[0m"
-	echo -e " \e[1m$HOSTNAME\e[0m $TEXT_TOP"	
+	echo -e " \e[1m$HOSTNAME\e[0m $TEXT_TOP"
 	echo -e " $BORDER_COLOR───────────────────────────────────────\e[0m"
-	
-	PrintInfo "Version" "V$VERSION \e[90m($HW_MODEL_DESCRIPTION)\e[0m"
-	PrintInfo "Uptime" "$UPTIME"	
-	
-	echo -e "  $BORDER_COLOR───────────────────────────────────────\e[0m"        
+
+	PrintInfo "Model" "\e[90m$HW_MODEL_DESCRIPTION\e[0m"
+	Pri	ntInfo "Uptime" "$UPTIME"
+
+	echo -e "  $BORDER_COLOR───────────────────────────────────────\e[0m"
 }
 
 Description(){
-		
+
 	echo -e ""
 	echo -e "\e[1m pacman -S\e[0m	=\e[90m Install new packages.\e[0m"
-	echo -e "\e[1m pacman -R\e[0m	=\e[90m Remove new packages.\e[0m"			
+	echo -e "\e[1m pacman -R\e[0m	=\e[90m Remove new packages.\e[0m"
 
 	#Update available
 	if (( $UPDATE_AVAILABLE > 0 )); then
 		echo -e "\e[1m pacman -Syu\e[0m	= \e[91mRun this to update and upgrade your system.\e[0m"
-	else 
-		echo -e "\e[1m pacman -Syu\e[0m	= \e[90mRun this to update and upgrade your system.\e[0m"	
+	else
+		echo -e "\e[1m pacman -Syu\e[0m	= \e[90mRun this to update and upgrade your system.\e[0m"
 	fi
-	
+
 	echo -e ""
 }
 
@@ -94,6 +75,6 @@ Banner
 
 echo -e ""
 
-#Description	
+#Description
 
 #-------------------------------------------------------------------------------------
