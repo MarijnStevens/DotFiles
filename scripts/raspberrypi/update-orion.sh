@@ -1,1 +1,3 @@
-scp ./dietpi-banner.sh orion:/DietPi/dietpi/dietpi-banner
+#!/bin/bash
+
+scp msd-banner orion:~/.msd-banner
