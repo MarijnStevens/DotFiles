@@ -4,9 +4,9 @@
 # Global
 #/////////////////////////////////////////////////////////////////////////////////////
 
-VERSION="1"
-HW_MODEL_DESCRIPTION=$(cat /proc/device-tree/model)
-HOSTNAME=$(cat /etc/hostname)
+VERSION="2"
+HW_MODEL_DESCRIPTION=$(cat /proc/device-tree/model | tr '\0' '\n')
+HOSTNAME=$(< /etc/hostname)
 UPTIME=$(uptime -p)
 
 # Color palette:
@@ -44,7 +44,7 @@ Banner(){
 	echo -e " $BORDER_COLOR───────────────────────────────────────\e[0m"
 
 	PrintInfo "Model" "\e[90m$HW_MODEL_DESCRIPTION\e[0m"
-	Pri	ntInfo "Uptime" "$UPTIME"
+	PrintInfo "Uptime" "$UPTIME"
 
 	echo -e "  $BORDER_COLOR───────────────────────────────────────\e[0m"
 }
