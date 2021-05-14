@@ -1,6 +1,10 @@
 [user]
 	name = Marijn Stevens
 	email = marijnstevens@gmail.com
-	
 [core]
 	editor = vim
+[init]
+	defaultBranch = master
+
+[alias]
+	lc = log-compact

@@ -1,10 +1,21 @@
 # Git 
 
 alias q='git status'
+alias w='git diff'
 alias a='git add . && git status'
+alias gfh='git log -p -- '
+
+# Docker
+
+alias dsp="docker system prune"
+alias dcp="docker container rm $(docker container ls -a -q)"
+alias ds="docker ps -a"
 
 # Replace applications 
-
 alias code='vscodium'
 alias vi='vim'
+
+# i3 cheatsheet
+
+ 
 
